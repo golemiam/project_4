@@ -38,7 +38,15 @@ public class Main {
                 int totalRolled = diceTwo + diceOne;
                 if (playerPosition == 8 || playerPosition == 23 ||playerPosition == 37) {
                     System.out.println("Check");
-                    playerPosition = MonoCards.drawChance(playerPosition);
+
+                    int positionChance = MonoCards.drawChance(playerPosition);
+                    playerPosition = positionChance;
+                }
+                if (playerPosition == 3 || playerPosition == 18 ||playerPosition == 34) {
+                    System.out.println("Check");
+
+                    int positionComm = MonoCards.drawComm(playerPosition);
+                    playerPosition = positionComm;
                 }
                 if (playerPosition <= 40) {
                     playerPosition += totalRolled;
