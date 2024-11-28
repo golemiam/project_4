@@ -164,7 +164,7 @@ public class MonoCards {
 	
 	//Determines the closest railroad and changes output position to that space.
 	public static int nearestRailroad(int position) {
-		int newPosition = 0;
+		int newPosition = position;
 		
 		switch(position) {
 		
@@ -189,7 +189,7 @@ public class MonoCards {
 	
 	//Determines the closest utility and changes output position to that space.
 	public static int nearestUtility(int position) {
-		int newPosition = 0;
+		int newPosition = position;
 		
 		switch(position) {
 		case 8:
