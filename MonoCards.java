@@ -77,7 +77,7 @@ public class MonoCards {
 			/*In Jail and move to where jail is.*/
 			case 5:
 				inJail(true);
-				return 10;
+				return 11;
 				
 			//No relevant effect on the card; nothing happens.
 			default: 
@@ -104,7 +104,7 @@ public class MonoCards {
 		switch(effect) {
 		/*Where Boardwalk is.*/
 		case 0: 
-			return 39;
+			return 40;
 		
 		/*Where go is.*/
 		case 1: 
@@ -116,7 +116,7 @@ public class MonoCards {
 		
 		/*Where St. Charles position is.*/
 		case 3: 
-			return 11;
+			return 12;
 		
 		/*Where the nearest Railroad is.*/
 		case 4: 
@@ -142,11 +142,11 @@ public class MonoCards {
 		/*In jail and move to where jail is.*/
 		case 10: 
 			inJail(true);
-			return 10;
+			return 11;
 		
 		/*Where Reading railroad is.*/
 		case 13: 
-			return 5;
+			return 6;
 		
 		/* Card had no relevant effect*/
 		default: 
