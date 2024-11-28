@@ -4,58 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MonoCards {
-	private static int commposition = -1;
-	private static int cCposition = -1;
-	private static List<Integer> cCCards;
-	private static List<Integer> cCards;
+	public static int commposition = -1;
+	public static int cCposition = -1;
 
-	public static void main(String[] args) {
-		//Hashmap of Community Chest cards, mostly for vanity to see what each card actually is.		
-		HashMap<Integer, String> CommunityChestCards = new HashMap<Integer, String>();
-		CommunityChestCards.put(0, "Advance to Go!");
-		CommunityChestCards.put(1, "Bank Error.");
-		CommunityChestCards.put(2, "Doctor Fee.");
-		CommunityChestCards.put(3, "Sale of Stock.");
-		CommunityChestCards.put(4, "Get out of Jail Free.");
-		CommunityChestCards.put(5, "Go to Jail.");
-		CommunityChestCards.put(6, "Holiday funds mature.");
-		CommunityChestCards.put(7, "Income Tax Refund.");
-		CommunityChestCards.put(8, "Birthday!");
-		CommunityChestCards.put(9, "Life Insurance.");
-		CommunityChestCards.put(10, "Pay Hospital.");
-		CommunityChestCards.put(11, "Pay School Fees.");
-		CommunityChestCards.put(12, "Consiltancy Fee.");
-		CommunityChestCards.put(13, "Assessed Street Repair.");
-		CommunityChestCards.put(14, "Won second prize.");
-		CommunityChestCards.put(15, "Inheiritence.");	
-		
-		//Turing our KeyValuePair HashMap into an int array for optimization in the sim.
-		cCCards = new ArrayList<>(CommunityChestCards.keySet());
-		
-		//Hashmap of Chance cards, mostly for vanity to see what each card actually is.
-		HashMap<Integer, String> ChanceCards = new HashMap<Integer, String>();
-		ChanceCards.put(0, "Advance to Boardwalk.");
-		ChanceCards.put(1, "Advance to Go!");
-		ChanceCards.put(2, "Advance to Illinois Avenue.");
-		ChanceCards.put(3, "Advance to St. Charles position.");
-		ChanceCards.put(4, "Advance to the nearest Railroad.");
-		ChanceCards.put(5, "Advance to the nearest Railroad.");
-		ChanceCards.put(6, "Advance token to nearest Utility.");
-		ChanceCards.put(7, "Bank pays you dividend");
-		ChanceCards.put(8, "Get Out of Jail Free");
-		ChanceCards.put(9, "Go Back 3 Spaces");
-		ChanceCards.put(10, "Go to Jail.");
-		ChanceCards.put(11, "General Repairs");
-		ChanceCards.put(12, "Speeding fine");
-		ChanceCards.put(13, "Take a trip to Reading Railroad.");
-		ChanceCards.put(14, "Chairman of the Board.");
-		ChanceCards.put(15, "Building Loan");
-		
-		//Turing our KeyValuePair HashMap into an int array for optimization in the sim.
-		cCards = new ArrayList<>(ChanceCards.keySet());
-		
-		//Test outputs
+	public static void monopolycards() {		
 		/*
+		//Test outputs
 		shuffleDeck(cCCards);
 		System.out.println(cCCards);
 		
@@ -92,7 +46,7 @@ public class MonoCards {
 	//The decks are different enough that I felt making separate methods was justified.
 	
 	//Draws a card from the Community Chest Deck.
-	public static int drawComm (int position) {
+	public static int drawComm (int position, List<Integer> cCCards) {
 		//Increment the Community Chest card we are looking at.
 		commposition++;
 		
@@ -129,7 +83,7 @@ public class MonoCards {
 		}
 	}
 	
-	public static int drawChance (int position) {
+	public static int drawChance (int position, List<Integer> cCards) {
 		//Increment the card we are looking at.
 		cCposition++;
 		
@@ -227,7 +181,7 @@ public class MonoCards {
 			break;
 			
 		default:
-			System.out.println("This should never happen, probably an error.");
+			//System.out.println("This should never happen, probably an error.");
 		}
 		
 		return newPosition;
@@ -248,9 +202,61 @@ public class MonoCards {
 			newPosition = 13;
 			break;
 		default:
-			System.out.println("This should never happen, probably an error.");
+			//System.out.println("This should never happen, probably an error.");
 		}
 		
 		return newPosition;
+	}
+	
+	public static List<Integer> getcCard(){
+		//Hashmap of Chance cards, mostly for vanity to see what each card actually is.
+				HashMap<Integer, String> ChanceCards = new HashMap<Integer, String>();
+				ChanceCards.put(0, "Advance to Boardwalk.");
+				ChanceCards.put(1, "Advance to Go!");
+				ChanceCards.put(2, "Advance to Illinois Avenue.");
+				ChanceCards.put(3, "Advance to St. Charles position.");
+				ChanceCards.put(4, "Advance to the nearest Railroad.");
+				ChanceCards.put(5, "Advance to the nearest Railroad.");
+				ChanceCards.put(6, "Advance token to nearest Utility.");
+				ChanceCards.put(7, "Bank pays you dividend");
+				ChanceCards.put(8, "Get Out of Jail Free");
+				ChanceCards.put(9, "Go Back 3 Spaces");
+				ChanceCards.put(10, "Go to Jail.");
+				ChanceCards.put(11, "General Repairs");
+				ChanceCards.put(12, "Speeding fine");
+				ChanceCards.put(13, "Take a trip to Reading Railroad.");
+				ChanceCards.put(14, "Chairman of the Board.");
+				ChanceCards.put(15, "Building Loan");
+				
+		//Turing our KeyValuePair HashMap into an int array for optimization in the sim.
+		List<Integer> cCards = new ArrayList<>(ChanceCards.keySet());
+		
+		return cCards;
+	}
+	
+	public static List<Integer> getCommCard(){
+		//Hashmap of Community Chest cards, mostly for vanity to see what each card actually is.		
+		HashMap<Integer, String> CommunityChestCards = new HashMap<Integer, String>();
+		CommunityChestCards.put(0, "Advance to Go!");
+		CommunityChestCards.put(1, "Bank Error.");
+		CommunityChestCards.put(2, "Doctor Fee.");
+		CommunityChestCards.put(3, "Sale of Stock.");
+		CommunityChestCards.put(4, "Get out of Jail Free.");
+		CommunityChestCards.put(5, "Go to Jail.");
+		CommunityChestCards.put(6, "Holiday funds mature.");
+		CommunityChestCards.put(7, "Income Tax Refund.");
+		CommunityChestCards.put(8, "Birthday!");
+		CommunityChestCards.put(9, "Life Insurance.");
+		CommunityChestCards.put(10, "Pay Hospital.");
+		CommunityChestCards.put(11, "Pay School Fees.");
+		CommunityChestCards.put(12, "Consiltancy Fee.");
+		CommunityChestCards.put(13, "Assessed Street Repair.");
+		CommunityChestCards.put(14, "Won second prize.");
+		CommunityChestCards.put(15, "Inheiritence.");	
+		
+		//Turing our KeyValuePair HashMap into an int array for optimization in the sim.
+		List<Integer> cCCards = new ArrayList<>(CommunityChestCards.keySet());
+		
+		return cCCards;
 	}
 }
