@@ -230,6 +230,8 @@ public class MonoCards {
 				
 		//Turing our KeyValuePair HashMap into an int array for optimization in the sim.
 		List<Integer> cCards = new ArrayList<>(ChanceCards.keySet());
+
+		shuffleDeck(cCards);
 		
 		return cCards;
 	}
@@ -257,7 +259,9 @@ public class MonoCards {
 		
 		//Turing our KeyValuePair HashMap into an int array for optimization in the sim.
 		List<Integer> cCCards = new ArrayList<>(CommunityChestCards.keySet());
-		
+
+		shuffleDeck(cCCards);
+
 		return cCCards;
 	}
 }
