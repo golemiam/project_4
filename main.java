@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Random;
 
 public class Main {
+    MonoCards chanceAndChest = new MonoCards();
 
     public static void main(String[] args) throws IOException {
         String inputFile = "board.csv";
         String outputFile = "sorted_data.csv";
         int playerPosition = 0;
         Random random = new Random();
-        int diceOne = random.nextInt(5) + 1; // Generates a random integer between 0 and 9 (inclusive)
-        int diceTwo = random.nextInt(5) + 1;
+
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
              FileWriter writer = new FileWriter(outputFile)) {
@@ -29,6 +29,50 @@ public class Main {
                 lines.add(line);
             }
 
+            int amountOfRolls = 10;
+            for (int i = 1; i <= amountOfRolls; i++) {
+                String str1 = String.valueOf(playerPosition);
+                System.out.println(str1);
+                int diceOne = random.nextInt(5) + 1; // Generates a random integer between 0 and 9 (inclusive)
+                int diceTwo = random.nextInt(5) + 1;
+                int totalRolled = diceTwo + diceOne;
+                if (playerPosition == 8 || playerPosition == 23 ||playerPosition == 37) {
+                    System.out.println("Check");
+                    playerPosition = MonoCards.drawChance(playerPosition);
+                }
+                if (playerPosition <= 40) {
+                    playerPosition += totalRolled;
+                }
+                if (playerPosition > 40) {
+                    playerPosition -= 40;
+                }
+                int rolledTimes = 0;
+                if (diceOne == diceTwo) {
+
+                    if (rolledTimes < 3) {
+                        rolledTimes += 1;
+                        diceOne = random.nextInt(5) + 1; // Generates a random integer between 0 and 9 (inclusive)
+                        diceTwo = random.nextInt(5) + 1;
+                        totalRolled = diceTwo + diceOne;
+                        if (playerPosition <= 40) {
+                            playerPosition += totalRolled;
+                        } else if (playerPosition > 40) {
+                            playerPosition -= 40;
+                        }
+
+
+
+                    } else if (rolledTimes >= 3) {
+                        playerPosition = 31;
+                        rolledTimes = 0;
+
+
+                    }
+
+                } else if (diceOne != diceTwo) {
+                    rolledTimes = 0;
+                }
+            };
             // Sort by the first column (splitting by comma)
             //Collections.sort(lines, Comparator.comparing(l -> l.split(",")[0]));
 
@@ -46,10 +90,9 @@ public class Main {
             } catch (CsvException e) {
                 e.printStackTrace();
             }
-            String str1 = String.valueOf(diceOne);
+            String str1 = String.valueOf(playerPosition);
             System.out.println(str1);
-            String str2 = String.valueOf(diceTwo);
-            System.out.println(str2);
+
 
             for (String l : lines) {
                 writer.write(l + "\n");
@@ -57,4 +100,3 @@ public class Main {
         }
     }
 }
-
