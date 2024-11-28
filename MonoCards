@@ -208,7 +208,7 @@ public class MonoCards {
 		return newPosition;
 	}
 	
-	public static List<Integer> getChestDeck(){
+	public static List<Integer> getChanceDeck(){
 		//Hashmap of Chance cards, mostly for vanity to see what each card actually is.
 				HashMap<Integer, String> ChanceCards = new HashMap<Integer, String>();
 				ChanceCards.put(0, "Advance to Boardwalk.");
