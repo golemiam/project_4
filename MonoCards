@@ -208,7 +208,7 @@ public class MonoCards {
 		return newPosition;
 	}
 	
-	public static List<Integer> getcCard(){
+	public static List<Integer> getChestDeck(){
 		//Hashmap of Chance cards, mostly for vanity to see what each card actually is.
 				HashMap<Integer, String> ChanceCards = new HashMap<Integer, String>();
 				ChanceCards.put(0, "Advance to Boardwalk.");
@@ -234,7 +234,8 @@ public class MonoCards {
 		return cCards;
 	}
 	
-	public static List<Integer> getCommCard(){
+	//Initialize the Community Chest Deck for public use.
+	public static List<Integer> getCommDeck(){
 		//Hashmap of Community Chest cards, mostly for vanity to see what each card actually is.		
 		HashMap<Integer, String> CommunityChestCards = new HashMap<Integer, String>();
 		CommunityChestCards.put(0, "Advance to Go!");
