@@ -1,10 +1,3 @@
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,24 +11,12 @@ public class Main {
 	public static boolean Jailcard = false;
 	public static boolean inJail = false;
 
-	public static void main(String[] args) throws IOException {
-		
-		String inputFile = "";
-		String outputFile = "sorted_data.csv";
+	public static void main(String[] args) {
+
 		int playerPosition = 0;
 		Random random = new Random();
 
 		int amountOfRolls = 100;
-
-		try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-				FileWriter writer = new FileWriter(outputFile)) {
-
-			List<String> lines = new ArrayList<>();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				lines.add(line);
-			}
-
 			for (int i = 1; i <= amountOfRolls; i++) {
 				String str1 = String.valueOf(playerPosition);
 				System.out.println(str1);
@@ -90,25 +71,9 @@ public class Main {
 				}
 			}
 			;
-			
-			// Sort by the first column (splitting by comma)
-			// Collections.sort(lines, Comparator.comparing(l -> l.split(",")[0]));
-			/*
-			 * int columnIndex = 1; // Index of the column you want to extract (starting
-			 * from 0) // Using CSVReader to print values from the specified column try
-			 * (CSVReader csvReader = new CSVReader(new FileReader(inputFile))) {
-			 * List<String[]> records = csvReader.readAll();
-			 * 
-			 * for (String[] record : records) { if (record.length > columnIndex) {
-			 * System.out.println(record[columnIndex]); } } } catch (CsvException e) {
-			 * e.printStackTrace(); } String str1 = String.valueOf(playerPosition);
-			 * System.out.println(str1);
-			 * 
-			 * for (String l : lines) { writer.write(l + "\n"); }
-			 */
 		}
-	}
 
+	
 	/* GENERAL GAME MECHANICS*/
 	public static void JailStrategyA() {
 
