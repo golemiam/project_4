@@ -21,18 +21,20 @@ public class Main {
         LandingLedger ledgerA = new LandingLedger();
         LandingLedger ledgerB = new LandingLedger();
         // file name
-        String nameEnder = "sim3";
+        String nameEnder = "sim5";
 
-        ledger = ledgerA;
+        // pointer is used so code can target a generalized object.
+        ledger = ledgerA; // put in "CD" to store test data
         strat = 'A';
         int n_tests = 1000;
+        // run 4 tests of increase magnatude of n
         for (int i = 1; i <= 4; ++i) {
-            ledger.swap(i);
+            ledger.swap(i); // tells "CD" to store the next data set
             play(n_tests);
             n_tests *= 10;
         }
 
-        ledger = ledgerB;
+        ledger = ledgerB; // change "CD" to store test data
         strat = 'B';
         n_tests = 1000;
         for (int i = 1; i <= 4; ++i) {
@@ -41,7 +43,7 @@ public class Main {
             n_tests *= 10;
         }
 
-        // = = prints = =
+        // = = prints = = (for testing)
 
         int sum = 0;
         System.out.println("A stats:");
@@ -60,6 +62,7 @@ public class Main {
         System.out.println("sum = " + sum);
 
         // = = save = =
+
         ledgerA.createCSV("stratA" + nameEnder);
         ledgerB.createCSV("stratB" + nameEnder);
     }
@@ -70,6 +73,7 @@ public class Main {
      * @author Robbie
      */
     private static void play(int turns) {
+        // to ensure runs are consistant
         JailHandling.reset();
         Cards.reset();
 
@@ -89,6 +93,7 @@ public class Main {
             int diceTwo = random.nextInt(5) + 1;
             int totalRolled = diceTwo + diceOne;
 
+            // seperated because rules of doubles changes in and out of jail
             if (diceOne == diceTwo) {
                 System.out.print("Doubles!: ");
                 gotDoubles = true;
@@ -96,20 +101,17 @@ public class Main {
                 gotDoubles = false;
 
             if (JailHandling.isJailed()) {
-                JailHandling.bail(gotDoubles);
+                JailHandling.bail(gotDoubles); // try to get out
                 if (JailHandling.isJailed()) // if still jailed
-                    continue;
+                    continue; // turn is over
             }
 
             System.out.println(position + " + " + totalRolled + " = " + (position + totalRolled));
 
             // you do not get bonus if you used doubles to escape
-            if (JailHandling.usedDoubles) {
-                // reset marker
-                JailHandling.usedDoubles = false;
-            }
-            // check for doubles and its bonus/effects
-            else {
+            if (JailHandling.usedDoubles)
+                JailHandling.usedDoubles = false; // reset marker
+            else { // normal bonus rules for doubles
                 if (gotDoubles) {
                     doublesInARow++;
 
@@ -146,7 +148,7 @@ public class Main {
                 System.out.println("(Chance)");
 
                 int newPos = Cards.drawChance(position);
-                if (newPos != position)
+                if (newPos != position) // chance cards sometimes dont move you
                     ledger.landOn(newPos);
                 position = newPos;
             }
@@ -155,7 +157,7 @@ public class Main {
                 System.out.println("(Commun)");
 
                 int newPos = Cards.drawCommunity(position);
-                if (newPos != position)
+                if (newPos != position) // community cards sometimes dont move you
                     ledger.landOn(newPos);
                 position = newPos;
             }
@@ -182,7 +184,11 @@ public class Main {
         // messy solution to prevent the doubles bonus after escaping
         public static boolean usedDoubles;
 
+        /**
+         * Resets JailHandling class statics for each simulation.
+         */
         public static void reset() {
+            // used because object isn't reconstructed on each play
             hasGetOutOfJailFree = false;
             jailed = false;
             stratagy = strat;
@@ -190,6 +196,13 @@ public class Main {
             usedDoubles = false;
         }
 
+        /**
+         * Returns weather the player has or hasn't gotten out of jail.
+         * 
+         * @param hasDoubles Assumes dice is rolled before attempting to get out jail.
+         *                   (Not technically how it works but has no effect on
+         *                   simulation.)
+         */
         public static void bail(boolean hasDoubles) {
             turnsInJail++;
             switch (stratagy) {
@@ -236,14 +249,24 @@ public class Main {
             turnsInJail = 0;
         }
 
+        /**
+         * Gives the "player" the get out of jail free card.
+         */
         public static void giveCard() {
             hasGetOutOfJailFree = true;
         }
 
+        /**
+         * Jails the "player." Jail rules start to apply.
+         */
         public static void jail() {
             jailed = true;
         }
 
+        /**
+         * 
+         * @return Returns true if jailed.
+         */
         public static boolean isJailed() {
             return jailed;
         }
@@ -255,11 +278,15 @@ public class Main {
      * @author Damian
      */
     private class Cards {
+        // indexes for the deck (no need for discard pile in simulation really)
         private static int communityPos;
         private static int chancePos;
         private static List<Integer> CommunityDeck;
         private static List<Integer> ChanceDeck;
 
+        /**
+         * Resets Cards class statics for each simulation.
+         */
         public static void reset() {
             communityPos = -1;
             chancePos = -1;
@@ -267,14 +294,14 @@ public class Main {
 
         // There are two separate methods for drawing cards.
         // The decks are different enough that I felt making separate methods was
-        // justified.
+        // justified. -D
 
         /*
          * "Draws" a card from the Community Chest Deck and computes the "card's"
          * effect, returning the position.
          */
         public static int drawCommunity(int playerPos) {
-            if (communityPos == -1) {
+            if (communityPos == -1) { // initial class position
                 CommunityDeck = getCommunityDeck();
                 Collections.shuffle(CommunityDeck);
 
@@ -320,7 +347,7 @@ public class Main {
          * returning the position.
          */
         public static int drawChance(int playerPos) {
-            if (chancePos == -1) {
+            if (chancePos == -1) { // initial class position
                 ChanceDeck = getChanceDeck();
                 Collections.shuffle(ChanceDeck);
 
@@ -393,7 +420,12 @@ public class Main {
             }
         }
 
-        // From chance spaces (8,23,37) to nearest railroad.
+        /**
+         * Returns the nearest railroad from a given chance space (8, 23, or 37).
+         * 
+         * @param playerPos The player's current space.
+         * @return The player's new position (the railroad).
+         */
         public static int nearestRailroad(int playerPos) {
             int newPosition = playerPos;
 
@@ -415,7 +447,12 @@ public class Main {
             return newPosition;
         }
 
-        // From chance spaces (8,23,37) to nearest utility.
+        /**
+         * Returns the nearest utility from a given chance space (8, 23, or 37).
+         * 
+         * @param playerPos The player's current space.
+         * @return The player's new position (the utility).
+         */
         public static int nearestUtility(int playerPos) {
             int newPosition = playerPos;
 
